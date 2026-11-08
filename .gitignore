@@ -1,0 +1,29 @@
+# 编译产物
+build/
+obj/
+*.o
+*.d
+*.crf
+*.axf
+*.map
+*.lst
+*.dep
+*.htm
+*.lnp
+*.sct
+*.iex
+
+# Keil 备份与用户配置
+*.bak
+*.bak2
+*.uvguix.*
+*.scvd
+OBJ/
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 视频素材（体积大，见 docs/技术记录.md 里的素材清单）
+media/*.mp4
