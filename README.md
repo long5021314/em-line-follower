@@ -119,6 +119,10 @@ python tools/build_fw.py "src" "build" "SHOW_ON_OLED=0,STOP_MS=43700,CUT_IN=260,
 
 比赛场 34 m：**42.985 s**（同一套 950 + 切内 260）。
 
+比赛录像关键帧（0.5 s 发车 / 3.0 s 蛇行 / 42.0 s 回直道 / 43.5 s 冲线 / 44.0 s 滑行）：
+
+![关键帧](media/frames.jpg)
+
 ---
 
 ## 7. 已知问题
