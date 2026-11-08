@@ -2,7 +2,7 @@
 #define _DISPLAY_H
 #include "sys.h"
 
-/* control() ÀïµÄ¹ÊÕÏ¼ÇÂ¼£¨main.c ¶¨Òå£©£¬¼ÇÂ¼Ò³Òª¶Á */
+/* control() é‡Œçš„æ•…éšœè®°å½•ï¼ˆmain.c å®šä¹‰ï¼‰ï¼Œè®°å½•é¡µè¦è¯» */
 extern int diag_max_e;
 extern int diag_lost;
 extern int diag_full;

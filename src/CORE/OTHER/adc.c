@@ -4,82 +4,82 @@
 
 __IO u16 ADC_ConvertedValue[4]={0,0,0,0};  
 
-/*ÅäÖÃ²ÉÑùÍ¨µÀ¶Ë¿Ú Ê¹ÄÜGPIOÊ±ÖÓ	  ÉèÖÃADC²ÉÑùPA0,1,2,3¶Ë¿ÚÐÅºÅ*/
+/*é…ç½®é‡‡æ ·é€šé“ç«¯å£ ä½¿èƒ½GPIOæ—¶é’Ÿ	  è®¾ç½®ADCé‡‡æ ·PA0,1,2,3ç«¯å£ä¿¡å·*/
  void ADC1_GPIO_Config(void)
 { 
 	GPIO_InitTypeDef GPIO_InitStructure;    
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	  
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		    //GPIOÉèÖÃÎªÄ£ÄâÊäÈë
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		    //GPIOè®¾ç½®ä¸ºæ¨¡æ‹Ÿè¾“å…¥
   GPIO_Init(GPIOA, &GPIO_InitStructure);   
 }
 
 
-/*ÅäÖÃADC1µÄ¹¤×÷Ä£Ê½ÎªMDAÄ£Ê½  */
+/*é…ç½®ADC1çš„å·¥ä½œæ¨¡å¼ä¸ºMDAæ¨¡å¼  */
  void ADC1_Mode_Config(void)
 {
   DMA_InitTypeDef DMA_InitStructure;
   ADC_InitTypeDef ADC_InitStructure;	
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE); //Ê¹ÄÜMDA1Ê±ÖÓ
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE); //ä½¿èƒ½MDA1æ—¶é’Ÿ
 	/* DMA channel1 configuration */
-	DMA_DeInit(DMA1_Channel1);  //Ö¸¶¨DMAÍ¨µÀ
-  DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_DR_Address;//ÉèÖÃDMAÍâÉèµØÖ·
-  DMA_InitStructure.DMA_MemoryBaseAddr = (u32)&ADC_ConvertedValue;	//ÉèÖÃDMAÄÚ´æµØÖ·£¬ADC×ª»»½á¹ûÖ±½Ó·ÅÈë¸ÃµØÖ·
-  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC; //ÍâÉèÎªÉèÖÃÎªÊý¾Ý´«ÊäµÄÀ´Ô´
-  DMA_InitStructure.DMA_BufferSize = 4;	//DMA»º³åÇøÉèÖÃÎª4£»
-  DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;// ÍâÉèµØÖ·¹Ì¶¨
+	DMA_DeInit(DMA1_Channel1);  //æŒ‡å®šDMAé€šé“
+  DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_DR_Address;//è®¾ç½®DMAå¤–è®¾åœ°å€
+  DMA_InitStructure.DMA_MemoryBaseAddr = (u32)&ADC_ConvertedValue;	//è®¾ç½®DMAå†…å­˜åœ°å€ï¼ŒADCè½¬æ¢ç»“æžœç›´æŽ¥æ”¾å…¥è¯¥åœ°å€
+  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC; //å¤–è®¾ä¸ºè®¾ç½®ä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº
+  DMA_InitStructure.DMA_BufferSize = 4;	//DMAç¼“å†²åŒºè®¾ç½®ä¸º4ï¼›
+  DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;// å¤–è®¾åœ°å€å›ºå®š
   DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-  DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;// °ë×Ö
-  DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;// °ë×Ö
-  DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;// Ñ­»·´«Êä
-  DMA_InitStructure.DMA_Priority = DMA_Priority_High;// Ö¸¶¨ÅäÖÃDMAÍ¨µÀµÄÈí¼þÓÅÏÈ¼¶
-  DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;// Ö¸¶¨DMAÍ¨µÀÊÇ·ñÊ¹ÓÃÄÚ´æµ½ÄÚ´æµÄ´«Êä·½Ê½
+  DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;// åŠå­—
+  DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;// åŠå­—
+  DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;// å¾ªçŽ¯ä¼ è¾“
+  DMA_InitStructure.DMA_Priority = DMA_Priority_High;// æŒ‡å®šé…ç½®DMAé€šé“çš„è½¯ä»¶ä¼˜å…ˆçº§
+  DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;// æŒ‡å®šDMAé€šé“æ˜¯å¦ä½¿ç”¨å†…å­˜åˆ°å†…å­˜çš„ä¼ è¾“æ–¹å¼
 	
   DMA_Init(DMA1_Channel1, &DMA_InitStructure);
   
   /* Enable DMA channel1 */
-  DMA_Cmd(DMA1_Channel1, ENABLE);  //Ê¹ÄÜDMAÍ¨µÀ
+  DMA_Cmd(DMA1_Channel1, ENABLE);  //ä½¿èƒ½DMAé€šé“
 
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);	//Ê¹ÄÜADC1Ê±ÖÓ
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);	//ä½¿èƒ½ADC1æ—¶é’Ÿ
      
   /* ADC1 configuration */
-  ADC_InitStructure.ADC_Mode = ADC_Mode_Independent; //Ê¹ÓÃ¶ÀÁ¢Ä£Ê½£¬É¨ÃèÄ£Ê½
+  ADC_InitStructure.ADC_Mode = ADC_Mode_Independent; //ä½¿ç”¨ç‹¬ç«‹æ¨¡å¼ï¼Œæ‰«ææ¨¡å¼
 	ADC_InitStructure.ADC_ScanConvMode = ENABLE;   
-  ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;  // ¿ªÆôÁ¬Ðø×ª»»Ä£Ê½£¬¼´²»Í£µØ½øÐÐADC×ª»»
-  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; // ²»Ê¹ÓÃÍâ²¿´¥·¢×ª»»
-  ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;           // ²É¼¯Êý¾ÝÓÒ¶ÔÆë
-  ADC_InitStructure.ADC_NbrOfChannel = 4;  // Ö»ÓÐ4¸ö×ª»»Í¨µÀ
+  ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;  // å¼€å¯è¿žç»­è½¬æ¢æ¨¡å¼ï¼Œå³ä¸åœåœ°è¿›è¡ŒADCè½¬æ¢
+  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; // ä¸ä½¿ç”¨å¤–éƒ¨è§¦å‘è½¬æ¢
+  ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;           // é‡‡é›†æ•°æ®å³å¯¹é½
+  ADC_InitStructure.ADC_NbrOfChannel = 4;  // åªæœ‰4ä¸ªè½¬æ¢é€šé“
   ADC_Init(ADC1, &ADC_InitStructure);
 	
 	
   /* ADC1 regular channel11 configuration */ 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_239Cycles5); //Í¨µÀ1²ÉÑùÖÜÆÚ55.5¸öÊ±ÖÓÖÜÆÚ
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_239Cycles5); //Í¨µÀ2²ÉÑùÖÜÆÚ55.5¸öÊ±ÖÓÖÜÆÚ
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_239Cycles5); //Í¨µÀ3²ÉÑùÖÜÆÚ55.5¸öÊ±ÖÓÖÜÆÚ
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_239Cycles5); //Í¨µÀ4²ÉÑùÖÜÆÚ55.5¸öÊ±ÖÓÖÜÆÚ
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_239Cycles5); //é€šé“1é‡‡æ ·å‘¨æœŸ55.5ä¸ªæ—¶é’Ÿå‘¨æœŸ
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_239Cycles5); //é€šé“2é‡‡æ ·å‘¨æœŸ55.5ä¸ªæ—¶é’Ÿå‘¨æœŸ
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_239Cycles5); //é€šé“3é‡‡æ ·å‘¨æœŸ55.5ä¸ªæ—¶é’Ÿå‘¨æœŸ
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_239Cycles5); //é€šé“4é‡‡æ ·å‘¨æœŸ55.5ä¸ªæ—¶é’Ÿå‘¨æœŸ
 
   /* Enable ADC1 DMA */
-  ADC_DMACmd(ADC1, ENABLE);	 //Ê¹ÄÜADCµÄDMA
+  ADC_DMACmd(ADC1, ENABLE);	 //ä½¿èƒ½ADCçš„DMA
   
   /* Enable ADC1 */
-  ADC_Cmd(ADC1, ENABLE); //Ê¹ÄÜADC1
+  ADC_Cmd(ADC1, ENABLE); //ä½¿èƒ½ADC1
 
   /* Enable ADC1 reset calibaration register */   
-  ADC_ResetCalibration(ADC1);          // ¸´Î»Ð£×¼¼Ä´æÆ÷
+  ADC_ResetCalibration(ADC1);          // å¤ä½æ ¡å‡†å¯„å­˜å™¨
   /* Check the end of ADC1 reset calibration register */
-  while(ADC_GetResetCalibrationStatus(ADC1));   // µÈ´ýÐ£×¼¼Ä´æÆ÷¸´Î»Íê³É
+  while(ADC_GetResetCalibrationStatus(ADC1));   // ç­‰å¾…æ ¡å‡†å¯„å­˜å™¨å¤ä½å®Œæˆ
 
   /* Start ADC1 calibaration */
-  ADC_StartCalibration(ADC1);             // ADCÐ£×¼
+  ADC_StartCalibration(ADC1);             // ADCæ ¡å‡†
   /* Check the end of ADC1 calibration */
-  while(ADC_GetCalibrationStatus(ADC1));        // µÈ´ýÐ£×¼Íê³É
+  while(ADC_GetCalibrationStatus(ADC1));        // ç­‰å¾…æ ¡å‡†å®Œæˆ
      
   /* Start ADC1 Software Conversion */ 
-  ADC_SoftwareStartConvCmd(ADC1, ENABLE);  //¿ªÊ¼×ª»»
+  ADC_SoftwareStartConvCmd(ADC1, ENABLE);  //å¼€å§‹è½¬æ¢
 }
 
 
-//adc1³õÊ¼»¯
+//adc1åˆå§‹åŒ–
 void ADC1_init(void) 
 {
 	ADC1_GPIO_Config();
@@ -88,55 +88,55 @@ void ADC1_init(void)
 
 
 /*
-  »ñÈ¡µç¸ÐÊýÖµ
-  ADC_right_aclinic      ÓÒ±ßË®Æ½µç¸Ð¶ÁÊý
-  ADC_right_vertical     ÓÒ±ß´¹Ö±µç¸Ð¶ÁÊý
-  ADC_left_vertical      ×ó±ß´¹Ö±µç¸Ð¶ÁÊý
-  ADC_left_aclinic       ×ó±ßË®Æ½µç¸Ð¶ÁÊý
+  èŽ·å–ç”µæ„Ÿæ•°å€¼
+  ADC_right_aclinic      å³è¾¹æ°´å¹³ç”µæ„Ÿè¯»æ•°
+  ADC_right_vertical     å³è¾¹åž‚ç›´ç”µæ„Ÿè¯»æ•°
+  ADC_left_vertical      å·¦è¾¹åž‚ç›´ç”µæ„Ÿè¯»æ•°
+  ADC_left_aclinic       å·¦è¾¹æ°´å¹³ç”µæ„Ÿè¯»æ•°
 */
 int ADC_right_aclinic =0;
 int ADC_right_vertical=0;
 int ADC_left_vertical=0;
 int ADC_left_aclinic =0;
 
-/* ================== Æ«²î¼ÆËã£º²î±ÈºÍ + ¿ª»ú×Ô¶¯Áãµã ==================
-   ÉÏÒ»°æÓÃµÄÊÇ"ÏÈ¼õ×îÐ¡Öµ¡¢ÔÙ³ýÒÔÁ¿³Ì"£º
+/* ================== åå·®è®¡ç®—ï¼šå·®æ¯”å’Œ + å¼€æœºè‡ªåŠ¨é›¶ç‚¹ ==================
+   ä¸Šä¸€ç‰ˆç”¨çš„æ˜¯"å…ˆå‡æœ€å°å€¼ã€å†é™¤ä»¥é‡ç¨‹"ï¼š
        norm = (v - MIN) * 1000 / (MAX - MIN)
-   Ë¼Â·Ã»´í£¬µ«Ëü±ØÐëÏÈÖªµÀÃ¿Ò»Â·µÄ MAX£¨¼´×î´ó¶ÁÊý£©¡£
-   MAX ²Â´óÁË£¬Æ«²î±»Ñ¹Ð¡¡¢×ªÏò¼¸ºõÃ»ÓÐÈ¨ÏÞ£»²ÂÐ¡ÁËÓÖÖ±½Ó±¥ºÍ¡£
-   ³µÉÏÃ»×ö±ê¶¨Ê±£¬MAX=3000 Ö»ÊÇÎÒ²ÂµÄ£¬ÕâÒ»²½±¾Éí¾Í²»¿É¿¿¡£
+   æ€è·¯æ²¡é”™ï¼Œä½†å®ƒå¿…é¡»å…ˆçŸ¥é“æ¯ä¸€è·¯çš„ MAXï¼ˆå³æœ€å¤§è¯»æ•°ï¼‰ã€‚
+   MAX çŒœå¤§äº†ï¼Œåå·®è¢«åŽ‹å°ã€è½¬å‘å‡ ä¹Žæ²¡æœ‰æƒé™ï¼›çŒœå°äº†åˆç›´æŽ¥é¥±å’Œã€‚
+   è½¦ä¸Šæ²¡åšæ ‡å®šæ—¶ï¼ŒMAX=3000 åªæ˜¯æˆ‘çŒœçš„ï¼Œè¿™ä¸€æ­¥æœ¬èº«å°±ä¸å¯é ã€‚
 
-   »»³É²î±ÈºÍ£¬ÓÃ±ÈÖµ¶ø²»ÊÇ¾ø¶Ô·ù¶È£º
+   æ¢æˆå·®æ¯”å’Œï¼Œç”¨æ¯”å€¼è€Œä¸æ˜¯ç»å¯¹å¹…åº¦ï¼š
 
        err = (R - L) / (R + L) * 1000
 
-   ºÃ´¦£ºÂúÁ¿³ÌÌìÈ»¾ÍÊÇ ¡À1000£¬µç¸ÐÁéÃô¶È¡¢ÔË·ÅÔöÒæ¡¢ÀëµØ¸ß¶ÈÔõÃ´±ä
-   ¶¼²»Ó°ÏìÕâ¸ö±ÈÀý£¬²»ÐèÒª±ê¶¨Á¿³Ì¡£
+   å¥½å¤„ï¼šæ»¡é‡ç¨‹å¤©ç„¶å°±æ˜¯ Â±1000ï¼Œç”µæ„Ÿçµæ•åº¦ã€è¿æ”¾å¢žç›Šã€ç¦»åœ°é«˜åº¦æ€Žä¹ˆå˜
+   éƒ½ä¸å½±å“è¿™ä¸ªæ¯”ä¾‹ï¼Œä¸éœ€è¦æ ‡å®šé‡ç¨‹ã€‚
 
-   Ê£ÏÂµÄÎ¨Ò»ÎÊÌâÊÇ"×óÓÒÔöÒæ²»µÈ"Ôì³ÉµÄ¹Ì¶¨Æ«ÖÃ£¨×óÂ·Èõ -> ³µÔÚÖÐÏß
-   Ê± err Ò²²»ÊÇ 0£©¡£Õâ¸öÓÃ¿ª»ú×Ô¶¯Áãµã¼õµô£ºÉÏµçºóÇ° 200 ´ÎÓÐÐ§
-   ²ÉÑùÈ¡Æ½¾ùµ±Áãµã£¬Ö®ºóÒ»Ö±¼õÕâ¸öÖµ¡£
-   ¡ú ¿ª»úÊ±Çë°Ñ³µÕý·ÅÔÚµ¼ÏßÖÐÐÄ¸½½ü¡¢¾²Ö¹Ô¼ 1 Ãë¡£
+   å‰©ä¸‹çš„å”¯ä¸€é—®é¢˜æ˜¯"å·¦å³å¢žç›Šä¸ç­‰"é€ æˆçš„å›ºå®šåç½®ï¼ˆå·¦è·¯å¼± -> è½¦åœ¨ä¸­çº¿
+   æ—¶ err ä¹Ÿä¸æ˜¯ 0ï¼‰ã€‚è¿™ä¸ªç”¨å¼€æœºè‡ªåŠ¨é›¶ç‚¹å‡æŽ‰ï¼šä¸Šç”µåŽå‰ 200 æ¬¡æœ‰æ•ˆ
+   é‡‡æ ·å–å¹³å‡å½“é›¶ç‚¹ï¼Œä¹‹åŽä¸€ç›´å‡è¿™ä¸ªå€¼ã€‚
+   â†’ å¼€æœºæ—¶è¯·æŠŠè½¦æ­£æ”¾åœ¨å¯¼çº¿ä¸­å¿ƒé™„è¿‘ã€é™æ­¢çº¦ 1 ç§’ã€‚
    ==================================================================== */
-int track_err = 0;      /* µ±Ç°Æ«²î£º-1000(³µÆ«×ó) ~ +1000(³µÆ«ÓÒ) */
-int err_zero  = 0;      /* ¿ª»ú×ÔÐ£×¼²â³öµÄ¹Ì¶¨Æ«ÖÃ */
-int adc_sum   = 0;      /* ×óÓÒÖ®ºÍ£ºÓÃÀ´ÅÐ¶ÏÓÐÃ»ÓÐÐÅºÅ */
+int track_err = 0;      /* å½“å‰åå·®ï¼š-1000(è½¦åå·¦) ~ +1000(è½¦åå³) */
+int err_zero  = 0;      /* å¼€æœºè‡ªæ ¡å‡†æµ‹å‡ºçš„å›ºå®šåç½® */
+int adc_sum   = 0;      /* å·¦å³ä¹‹å’Œï¼šç”¨æ¥åˆ¤æ–­æœ‰æ²¡æœ‰ä¿¡å· */
 
 static long zero_acc  = 0;
 static int  zero_cnt  = 0;
 static u8   zero_done = 0;
-u8 zero_enable = 0;   /* main È·ÈÏ³µ·ÅÎÈºóÖÃ 1£¬Ö®Ç°²»ÀÛ¼ÓÁãµã */
+u8 zero_enable = 0;   /* main ç¡®è®¤è½¦æ”¾ç¨³åŽç½® 1ï¼Œä¹‹å‰ä¸ç´¯åŠ é›¶ç‚¹ */
 static long sum_acc   = 0;
-static int  sum_ref   = 0;   /* ¿ª»úÊ±£¨³µÔÚµ¼ÏßÖÐÏß£©µÄ×óÓÒÖ®ºÍ£¬ÓÃÀ´¶¨ÔëÉùÃÅÏÞ */
+static int  sum_ref   = 0;   /* å¼€æœºæ—¶ï¼ˆè½¦åœ¨å¯¼çº¿ä¸­çº¿ï¼‰çš„å·¦å³ä¹‹å’Œï¼Œç”¨æ¥å®šå™ªå£°é—¨é™ */
 
-/* ---------- ¶ªÏß´¦ÀíµÄ×´Ì¬ ----------
-   LOST_ERR£ºÅÐ¶¨¶ªÏßºóÇ¿ÖÆ¸ø³öµÄÆ«²î·ù¶È¡£
-   400 ¶ÔÓ¦ steer ¡Ö 0.93 x 400 = 372£¬×ãÒÔ°Ñ³µ¹Õ»ØÏß£¬ÓÖ²»ÖÁÓÚÖ±½Ó´òËÀ¡£ */
+/* ---------- ä¸¢çº¿å¤„ç†çš„çŠ¶æ€ ----------
+   LOST_ERRï¼šåˆ¤å®šä¸¢çº¿åŽå¼ºåˆ¶ç»™å‡ºçš„åå·®å¹…åº¦ã€‚
+   400 å¯¹åº” steer â‰ˆ 0.93 x 400 = 372ï¼Œè¶³ä»¥æŠŠè½¦æ‹å›žçº¿ï¼Œåˆä¸è‡³äºŽç›´æŽ¥æ‰“æ­»ã€‚ */
 #define LOST_ERR  400
 
-static u8  lost_cnt = 0;     /* Á¬Ðø¶ªÏßµÄºÁÃëÊý£¨1kHz ÏÂÃ¿ÖÜÆÚ +1£© */
-static int lost_dir = 0;     /* ¶ªÏßÇ°×îºóÒ»´ÎµÄÆ«²î·½Ïò */
-u8 adc_lost = 0;             /* ¸ø main.c / ×´Ì¬Ò³ÓÃµÄ"µ±Ç°ÊÇ·ñ¶ªÏß" */
+static u8  lost_cnt = 0;     /* è¿žç»­ä¸¢çº¿çš„æ¯«ç§’æ•°ï¼ˆ1kHz ä¸‹æ¯å‘¨æœŸ +1ï¼‰ */
+static int lost_dir = 0;     /* ä¸¢çº¿å‰æœ€åŽä¸€æ¬¡çš„åå·®æ–¹å‘ */
+u8 adc_lost = 0;             /* ç»™ main.c / çŠ¶æ€é¡µç”¨çš„"å½“å‰æ˜¯å¦ä¸¢çº¿" */
 
 int get_track_error(void)
 {
@@ -147,25 +147,25 @@ int get_track_error(void)
 
 	adc_sum = s;
 
-	/* ²î±ÈºÍ£ºÂúÁ¿³ÌÌìÈ» ¡À1000£¬ÓëÐÅºÅ¾ø¶Ô·ù¶ÈÎÞ¹Ø */
+	/* å·®æ¯”å’Œï¼šæ»¡é‡ç¨‹å¤©ç„¶ Â±1000ï¼Œä¸Žä¿¡å·ç»å¯¹å¹…åº¦æ— å…³ */
 	e = (s > 80) ? ((r - l) * 1000 / s) : 0;
 
-	/* ---------- ¿ª»ú×Ô¶¯Áãµã ---------- */
+	/* ---------- å¼€æœºè‡ªåŠ¨é›¶ç‚¹ ---------- */
 	if(!zero_done && zero_enable)
 	{
-		/* Ö»ÓÐ"²ÈÔÚµ¼ÏßÉÏ"µÄÑù±¾²ÅÄÃÀ´µ±Áãµã£ºs Ì«Ð¡ËµÃ÷³µ²»ÔÚÏßÉÏ£¬
-		   ÄÃËüµ±Áãµã»á°ÑÎó²î¹Ì»¯½øÈ¥¡£s>=200 ÊÇ¸ö±£ÊØÃÅ¼÷¡£
-		   ¡ï Ã»ÔÚµ¼ÏßÉÏ¾ÍÒ»Ö±µÈ£¬²»ÔÙ"ÊÔ¹»´ÎÊý¾Í·ÅÆú"¡ª¡ª
-		   ÒÔÇ°Ò»µ©ÉÏµçÊ±³µ±»ÄÃÔÚÊÖÉÏ£¬¾Í»á·ÅÆúÁãµã£¨err_zero=0¡¢sum_ref=0£©£¬
-		   µÈÓÚ°Ñ"×óÓÒÔöÒæ²»µÈ"µÄ¹Ì¶¨Æ«ÖÃ³¹µ×½»»¹¸ø³µ£¬ÅÜÆðÀ´±ØÈ»Æ«Ò»²à¡£ */
+		/* åªæœ‰"è¸©åœ¨å¯¼çº¿ä¸Š"çš„æ ·æœ¬æ‰æ‹¿æ¥å½“é›¶ç‚¹ï¼šs å¤ªå°è¯´æ˜Žè½¦ä¸åœ¨çº¿ä¸Šï¼Œ
+		   æ‹¿å®ƒå½“é›¶ç‚¹ä¼šæŠŠè¯¯å·®å›ºåŒ–è¿›åŽ»ã€‚s>=200 æ˜¯ä¸ªä¿å®ˆé—¨æ§›ã€‚
+		   â˜… æ²¡åœ¨å¯¼çº¿ä¸Šå°±ä¸€ç›´ç­‰ï¼Œä¸å†"è¯•å¤Ÿæ¬¡æ•°å°±æ”¾å¼ƒ"â€”â€”
+		   ä»¥å‰ä¸€æ—¦ä¸Šç”µæ—¶è½¦è¢«æ‹¿åœ¨æ‰‹ä¸Šï¼Œå°±ä¼šæ”¾å¼ƒé›¶ç‚¹ï¼ˆerr_zero=0ã€sum_ref=0ï¼‰ï¼Œ
+		   ç­‰äºŽæŠŠ"å·¦å³å¢žç›Šä¸ç­‰"çš„å›ºå®šåç½®å½»åº•äº¤è¿˜ç»™è½¦ï¼Œè·‘èµ·æ¥å¿…ç„¶åä¸€ä¾§ã€‚ */
 		if(s >= 200)
 		{
 			zero_acc += e;
 			sum_acc  += s;
 			zero_cnt++;
 
-			/* ²É¹» 200 ´ÎÓÐÐ§Ñù±¾¾ÍÊÕÎ²¡£¿ØÖÆ»·ÊÇ 1kHz£¬ËùÒÔÔ¼ 200 ºÁÃë¡£
-			   ×¢Òâ£ºÒÔÇ°ÕâÀïÐ´"10~20 ºÁÃë"ÊÇ¾É°æ£¨Ö÷Ñ­»·ÅÜ¶à¿ìËã¶à¿ì£©µÄ×¢ÊÍ£¬Ôç¾Í²»¶ÔÁË¡£ */
+			/* é‡‡å¤Ÿ 200 æ¬¡æœ‰æ•ˆæ ·æœ¬å°±æ”¶å°¾ã€‚æŽ§åˆ¶çŽ¯æ˜¯ 1kHzï¼Œæ‰€ä»¥çº¦ 200 æ¯«ç§’ã€‚
+			   æ³¨æ„ï¼šä»¥å‰è¿™é‡Œå†™"10~20 æ¯«ç§’"æ˜¯æ—§ç‰ˆï¼ˆä¸»å¾ªçŽ¯è·‘å¤šå¿«ç®—å¤šå¿«ï¼‰çš„æ³¨é‡Šï¼Œæ—©å°±ä¸å¯¹äº†ã€‚ */
 			if(zero_cnt >= 200)
 			{
 				int z = (int)(zero_acc / zero_cnt);
@@ -179,16 +179,16 @@ int get_track_error(void)
 		}
 	}
 
-	/* ³µÀëµ¼ÏßÌ«Ô¶£ºÁ½Â·¶¼ºÜÐ¡£¬Ïà³ýÖ»»á·Å´óÔëÉù¡£
-	   ÃÅÏÞÈ¡¿ª»úÖÐÏßÊ±µÄ 1/6£¬¸úÐÅºÅÇ¿¶È×Ô¶¯Æ¥Åä¡£
+	/* è½¦ç¦»å¯¼çº¿å¤ªè¿œï¼šä¸¤è·¯éƒ½å¾ˆå°ï¼Œç›¸é™¤åªä¼šæ”¾å¤§å™ªå£°ã€‚
+	   é—¨é™å–å¼€æœºä¸­çº¿æ—¶çš„ 1/6ï¼Œè·Ÿä¿¡å·å¼ºåº¦è‡ªåŠ¨åŒ¹é…ã€‚
 
-	   ¡ï 11-06 20:55 µÄ½ÌÑµ£ºÕâÀïÔ­À´ÊÇ track_err = 0¡£
-	   0 µÄÒâË¼ÊÇ"ÎÒºÜÕý£¬Ö±×Å×ß"¡ª¡ªËùÒÔ³µÒ»µ©±»ÍÆµ½°×Ãæ±ßÔµ¡¢Á½Â·ÐÅºÅÍ¬Ê±±äÈõ£¬
-	   ³ÌÐò¾ÍÈÏÎªËü¾ÓÖÐ£¬ÓÚÊÇ²»´ò·½Ïò£¬Ë³×Åµ±Ê±µÄ³¯ÏòÒ»Â·Ö±³å³öÈüµÀ¡£
-	   ÊÓÆµÀï 1.96~2.32 Ãë³µÉí½Ç¶ÈÍêÈ«¶³½á¡¢Ö±Ö±³åÏÂ°×Ãæ£¬¾ÍÊÇÕâ¸öÔì³ÉµÄ¡£
+	   â˜… 11-06 20:55 çš„æ•™è®­ï¼šè¿™é‡ŒåŽŸæ¥æ˜¯ track_err = 0ã€‚
+	   0 çš„æ„æ€æ˜¯"æˆ‘å¾ˆæ­£ï¼Œç›´ç€èµ°"â€”â€”æ‰€ä»¥è½¦ä¸€æ—¦è¢«æŽ¨åˆ°ç™½é¢è¾¹ç¼˜ã€ä¸¤è·¯ä¿¡å·åŒæ—¶å˜å¼±ï¼Œ
+	   ç¨‹åºå°±è®¤ä¸ºå®ƒå±…ä¸­ï¼ŒäºŽæ˜¯ä¸æ‰“æ–¹å‘ï¼Œé¡ºç€å½“æ—¶çš„æœå‘ä¸€è·¯ç›´å†²å‡ºèµ›é“ã€‚
+	   è§†é¢‘é‡Œ 1.96~2.32 ç§’è½¦èº«è§’åº¦å®Œå…¨å†»ç»“ã€ç›´ç›´å†²ä¸‹ç™½é¢ï¼Œå°±æ˜¯è¿™ä¸ªé€ æˆçš„ã€‚
 
-	   ÏÖÔÚ¸Ä³É£º±£³ÖÉÏÒ»´ÎµÄÆ«²î·½Ïò£¬²¢°Ñ·ù¶ÈÌ§µ½ LOST_ERR£¬
-	   ÈÃ³µ¹Õ»ØÈ¥ÕÒÏß£¬¶ø²»ÊÇÖ±ÐÐ¡£Á¬Ðø¶ª 5ms ²ÅÈÏ£¬·Àµ¥µãÔëÉù¡£ */
+	   çŽ°åœ¨æ”¹æˆï¼šä¿æŒä¸Šä¸€æ¬¡çš„åå·®æ–¹å‘ï¼Œå¹¶æŠŠå¹…åº¦æŠ¬åˆ° LOST_ERRï¼Œ
+	   è®©è½¦æ‹å›žåŽ»æ‰¾çº¿ï¼Œè€Œä¸æ˜¯ç›´è¡Œã€‚è¿žç»­ä¸¢ 5ms æ‰è®¤ï¼Œé˜²å•ç‚¹å™ªå£°ã€‚ */
 	if(zero_done && sum_ref > 0 && s < sum_ref / 6)
 	{
 		if(lost_cnt < 250) lost_cnt++;
@@ -215,19 +215,19 @@ int get_track_error(void)
 	return e;
 }
 
-/* ÁãµãÊÇ·ñÒÑ¾­²ÉÍê¡£¸ø main() ÓÃ£ºÉÏµçºóÒªµÈ³µ¾²Ö¹²ÉÂúÁãµã£¬ÔÙÈÃµç»ú×ª */
+/* é›¶ç‚¹æ˜¯å¦å·²ç»é‡‡å®Œã€‚ç»™ main() ç”¨ï¼šä¸Šç”µåŽè¦ç­‰è½¦é™æ­¢é‡‡æ»¡é›¶ç‚¹ï¼Œå†è®©ç”µæœºè½¬ */
 u8 zero_ready(void)
 {
 	return zero_done;
 }
 
-/* Ò»½×µÍÍ¨ y(n)=0.6x(n)+0.4y(n-1)
-   ÏµÊýÓÉ 0.8 ¸Äµ½ 0.6£ºÇ°¶Ë¼ì²¨ºóÒÑ¾­ÊÇ 5ms RC Æ½»¬¹ýµÄÖ±Á÷£¬Èí¼þÕâ²ãÔÙÖØÂË¾ÍÊÇ´¿ÑÓ³Ù¡£
-   Ê±¼ä³£Êý´ÓÔ¼ 4.3ms ½µµ½Ô¼ 2.0ms ¡ª¡ª ³µÔ½¿ì£¬Í¬ÑùµÄÑÓ³Ù»»³É"¶àÅÜÁË¶àÉÙºÁÃ×"¾ÍÔ½´ó£¬
-   ÈëÍä¾Í»áÍíÒ»²½£¬±íÏÖÎªÂýÂýÍùÍâÆ¯¡£ËùÒÔÌáËÙÊ±ÏÈÏ÷ÕâÀï£¬¶ø²»ÊÇ¼Ó×èÄá¡£
-   Ô­À´ output ÊÇ¾Ö²¿±äÁ¿¡¢Ã¿´Î½øº¯Êý¶¼¹éÁã£¬µÈÓÚÃ»ÂË²¨£»
-   µ«Ò²²»ÄÜ¼òµ¥¼Ó static ¡ª¡ª ÄÇÑù×óÓÒÁ½Â·»á¹²ÓÃÍ¬Ò»·Ý×´Ì¬¡¢»¥ÏàÎÛÈ¾¡£
-   ËùÒÔ×óÓÒ¸÷×ÔÁôÒ»·Ý¡£ */
+/* ä¸€é˜¶ä½Žé€š y(n)=0.6x(n)+0.4y(n-1)
+   ç³»æ•°ç”± 0.8 æ”¹åˆ° 0.6ï¼šå‰ç«¯æ£€æ³¢åŽå·²ç»æ˜¯ 5ms RC å¹³æ»‘è¿‡çš„ç›´æµï¼Œè½¯ä»¶è¿™å±‚å†é‡æ»¤å°±æ˜¯çº¯å»¶è¿Ÿã€‚
+   æ—¶é—´å¸¸æ•°ä»Žçº¦ 4.3ms é™åˆ°çº¦ 2.0ms â€”â€” è½¦è¶Šå¿«ï¼ŒåŒæ ·çš„å»¶è¿Ÿæ¢æˆ"å¤šè·‘äº†å¤šå°‘æ¯«ç±³"å°±è¶Šå¤§ï¼Œ
+   å…¥å¼¯å°±ä¼šæ™šä¸€æ­¥ï¼Œè¡¨çŽ°ä¸ºæ…¢æ…¢å¾€å¤–æ¼‚ã€‚æ‰€ä»¥æé€Ÿæ—¶å…ˆå‰Šè¿™é‡Œï¼Œè€Œä¸æ˜¯åŠ é˜»å°¼ã€‚
+   åŽŸæ¥ output æ˜¯å±€éƒ¨å˜é‡ã€æ¯æ¬¡è¿›å‡½æ•°éƒ½å½’é›¶ï¼Œç­‰äºŽæ²¡æ»¤æ³¢ï¼›
+   ä½†ä¹Ÿä¸èƒ½ç®€å•åŠ  static â€”â€” é‚£æ ·å·¦å³ä¸¤è·¯ä¼šå…±ç”¨åŒä¸€ä»½çŠ¶æ€ã€äº’ç›¸æ±¡æŸ“ã€‚
+   æ‰€ä»¥å·¦å³å„è‡ªç•™ä¸€ä»½ã€‚ */
 static float L_filter = 0.0f, R_filter = 0.0f;
 static u8    filter_ready = 0;
 
@@ -243,15 +243,15 @@ void get_ADC_values(void)
 	L_filter = 0.6f * (float)ADC_ConvertedValue[0] + 0.4f * L_filter;
 	R_filter = 0.6f * (float)ADC_ConvertedValue[3] + 0.4f * R_filter;
 
-	ADC_left_aclinic   = (int)L_filter;      /* PA0 ×óË®Æ½ */
-	ADC_right_aclinic  = (int)R_filter;      /* PA3 ÓÒË®Æ½ */
+	ADC_left_aclinic   = (int)L_filter;      /* PA0 å·¦æ°´å¹³ */
+	ADC_right_aclinic  = (int)R_filter;      /* PA3 å³æ°´å¹³ */
 
-	/* ÊúÖ±Í¨µÀÔÝÊ±²»ÓÃ£¨×öÈý²íÊ±ÔÙ·Å¿ª£¬×¢ÒâÓÒÊúÖ±ÊÇ [2] ²»ÊÇ [3]£© */
+	/* ç«–ç›´é€šé“æš‚æ—¶ä¸ç”¨ï¼ˆåšä¸‰å²”æ—¶å†æ”¾å¼€ï¼Œæ³¨æ„å³ç«–ç›´æ˜¯ [2] ä¸æ˜¯ [3]ï¼‰ */
 	ADC_left_vertical  = 0;
 	ADC_right_vertical = 0;
 }
 
-/* ¾É½Ó¿Ú£¬±£Áôµ«ÒÑ²»ÔÙÓÃÓÚ×óÓÒË®Æ½Í¨µÀ */
+/* æ—§æŽ¥å£ï¼Œä¿ç•™ä½†å·²ä¸å†ç”¨äºŽå·¦å³æ°´å¹³é€šé“ */
 float first_order_low_pass_filter(char *type, float k, float number)
 {
 	float output = 0.0f;

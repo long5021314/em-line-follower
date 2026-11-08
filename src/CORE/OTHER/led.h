@@ -2,6 +2,6 @@
 #define __LED_H	 
 #include "sys.h"
 
-void led_init(void);     //led³õÊ¼»¯
+void led_init(void);     //ledåˆå§‹åŒ–
 				    
 #endif

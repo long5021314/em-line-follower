@@ -2,7 +2,7 @@
 #define _INIT_H
 #include "sys.h"
 
-void all_init(void);//所有函数初始化
+void all_init(void);//鎵�鏈夊嚱鏁板垵濮嬪寲
 
 #endif
 

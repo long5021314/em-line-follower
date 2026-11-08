@@ -9,19 +9,19 @@ extern int ADC_right_vertical;
 extern int ADC_left_vertical;
 extern int ADC_left_aclinic;
 
-/* ²î±ÈºÍÆ«²î + ¿ª»ú×Ô¶¯Áãµã£º²»ĞèÒª±ê¶¨Á¿³Ì */
-extern int track_err;        /* -1000(Æ«×ó) ~ +1000(Æ«ÓÒ) */
-extern int err_zero;         /* ¿ª»ú×ÔĞ£×¼µÃµ½µÄ¹Ì¶¨Æ«ÖÃ */
-extern int adc_sum;          /* ×óÓÒ¶ÁÊıÖ®ºÍ£¬ÅĞ¶ÏÓĞÃ»ÓĞĞÅºÅ */
+/* å·®æ¯”å’Œåå·® + å¼€æœºè‡ªåŠ¨é›¶ç‚¹ï¼šä¸éœ€è¦æ ‡å®šé‡ç¨‹ */
+extern int track_err;        /* -1000(åå·¦) ~ +1000(åå³) */
+extern int err_zero;         /* å¼€æœºè‡ªæ ¡å‡†å¾—åˆ°çš„å›ºå®šåç½® */
+extern int adc_sum;          /* å·¦å³è¯»æ•°ä¹‹å’Œï¼Œåˆ¤æ–­æœ‰æ²¡æœ‰ä¿¡å· */
 
-int get_track_error(void);   /* ·µ»Ø -1000(Æ«×ó) ~ +1000(Æ«ÓÒ) */
+int get_track_error(void);   /* è¿”å› -1000(åå·¦) ~ +1000(åå³) */
 u8  zero_ready(void);
-extern u8 adc_lost;          /* 1 = µ±Ç°ÅĞÎª¶ªÏß£¨Á½Â·ĞÅºÅ¶¼Ì«Èõ£© */
+extern u8 adc_lost;          /* 1 = å½“å‰åˆ¤ä¸ºä¸¢çº¿ï¼ˆä¸¤è·¯ä¿¡å·éƒ½å¤ªå¼±ï¼‰ */
 
 
-void ADC1_init(void);          //adc1³õÊ¼»¯
-void get_ADC_values(void);     //»ñÈ¡µç¸ĞÊıÖµ
-float first_order_low_pass_filter(char *type, float k, float number);//Ò»½×µÍÍ¨ÂË²¨Æ÷
+void ADC1_init(void);          //adc1åˆå§‹åŒ–
+void get_ADC_values(void);     //è·å–ç”µæ„Ÿæ•°å€¼
+float first_order_low_pass_filter(char *type, float k, float number);//ä¸€é˜¶ä½é€šæ»¤æ³¢å™¨
 
 #endif 
 

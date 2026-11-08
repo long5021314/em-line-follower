@@ -2,7 +2,7 @@
 #define _HEADFILE_H
 #include "stm32f10x.h"
 
-//--------²úÆ·Çı¶¯ÎÄ¼ş
+//--------äº§å“é©±åŠ¨æ–‡ä»¶
 #include "adc.h"
 #include "led.c"
 #include "motor.h"
@@ -12,10 +12,10 @@
 #include "timer.h"
 #include "init.h"
 
-extern int speed;   //ËÙ¶È
-extern float p;      //×ªÏò²îÖµ±ÈÀı
+extern int speed;   //é€Ÿåº¦
+extern float p;      //è½¬å‘å·®å€¼æ¯”ä¾‹
 
-void control(void);//¿ØÖÆº¯Êı
+void control(void);//æ§åˆ¶å‡½æ•°
 
 #endif
 

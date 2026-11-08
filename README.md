@@ -35,6 +35,8 @@
 | 采样 | ADC1 + DMA 循环搬运 4 通道，采样时间 239.5 周期 |
 | 显示 | 0.96" 7 针 SPI OLED（SSD1306）：PA5=SCLK / PA7=MOSI / PA4=RES / PA6=DC / CS→GND |
 
+> 完整引脚表与 OLED 接线见 **[docs/接线.md](docs/接线.md)**。
+>
 > 注意：`motor.h` 里 `Speed_Max` 必须与 `ARR` 一致（999）。若写成 10000，speed 一旦超过 999 两轮直接恒 100% 占空比、**完全没有差速**，看起来像"算法不转弯"。
 
 ---
@@ -79,6 +81,22 @@ python tools/build_fw.py "src" "build" "SHOW_ON_OLED=0,STOP_MS=43700,CUT_IN=260,
 | `2_极限A_950切450.hex` | 950 | 450 | 无 | 更贴内，未验证 |
 
 烧录：ST-Link / DAP-Link，SWD（PA13/PA14）。
+
+### 源码编码
+
+源文件统一为 **UTF-8**（注释是中文，GitHub 上可直接阅读）。
+若 Keil 打开时注释显示乱码，在 `Edit → Configuration → Editor → Encoding` 里选 **UTF-8** 即可，不影响编译。
+
+### 不传宏也能复现比赛固件
+
+源码里的默认值就是比赛配置（`speed 950 / CUT_IN 260 / STOP_MS 43700 / USE_AUTO_STOP 1 / SHOW_ON_OLED 3`），所以：
+
+```bash
+python tools/build_fw.py        # 无参数，输出 build/fw.hex
+```
+
+得到的文件与 `hex/1_主力_950切260_停43.7.hex` **逐字节一致**（md5 `dfbb1d478ada450cc40c29e4fdcebf3f`）。
+如果对不上，说明源码被改过或编译器版本不同。
 
 ### 显示页面
 
@@ -144,11 +162,13 @@ src/                固件源码（CORE / USER / SYSTEM / STM32F10x_FWLib）
   CORE/OTHER/oled.c 软件 SPI 驱动
 tools/              改参与编译脚本
 hex/                成品固件
+docs/接线.md         引脚表与 OLED 接线、排障
 docs/技术记录.md     完整技术记录（硬件/算法/参数演进/比赛复盘/失败清单）
 docs/images/        现场照片与录像关键帧
 ```
 
-完整过程（含 16 个失败尝试、比赛日复盘、999 打滑的定量分析）见 **[docs/技术记录.md](docs/技术记录.md)**。
+完整过程（含 16 个失败尝试、比赛日复盘、999 打滑的定量分析）见 **[docs/技术记录.md](docs/技术记录.md)**；
+接线细节见 **[docs/接线.md](docs/接线.md)**。
 
 ---
 

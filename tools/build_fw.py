@@ -94,17 +94,19 @@ def main():
     os.makedirs(OBJ, exist_ok=True)
 
     # 2) sys.c 的 AC5 内嵌汇编改成 CMSIS 写法（MSR_MSP 全工程未被调用）
+    #    按字节替换，不假设源文件编码（GBK / UTF-8 都能处理）
     sp = os.path.join(SRCD, "SYSTEM/sys/sys.c")
-    s = open(sp, "rb").read().decode("gbk")
-    if "__asm void MSR_MSP" in s:
-        s = s.replace(
-            "__asm void MSR_MSP(u32 addr) \r\n{\r\n    MSR MSP, r0 \t\t\t//set Main Stack value\r\n    BX r14\r\n}",
-            "#if defined(__CC_ARM)\r\n"
-            "__asm void MSR_MSP(u32 addr)\r\n{\r\n    MSR MSP, r0\r\n    BX r14\r\n}\r\n"
-            "#else\r\n"
-            "void MSR_MSP(u32 addr)\r\n{\r\n    __asm volatile(\"msr msp, %0\" : : \"r\" (addr));\r\n}\r\n"
-            "#endif")
-        open(sp, "wb").write(s.encode("gbk"))
+    b = open(sp, "rb").read()
+    old = ("__asm void MSR_MSP(u32 addr) \r\n{\r\n    MSR MSP, r0 \t\t\t//set Main Stack value\r\n    BX r14\r\n}").encode()
+    new = (
+        "#if defined(__CC_ARM)\r\n"
+        "__asm void MSR_MSP(u32 addr)\r\n{\r\n    MSR MSP, r0\r\n    BX r14\r\n}\r\n"
+        "#else\r\n"
+        "void MSR_MSP(u32 addr)\r\n{\r\n    __asm volatile(\"msr msp, %0\" : : \"r\" (addr));\r\n}\r\n"
+        "#endif"
+    ).encode()
+    if old in b:
+        open(sp, "wb").write(b.replace(old, new))
         print("   sys.c: MSR_MSP 已改为 CMSIS 写法")
 
     # 3) 汇编启动文件
